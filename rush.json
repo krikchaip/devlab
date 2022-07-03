@@ -468,5 +468,9 @@
     //   "reviewCategory": "tools",
     //   "tags": ["tools"]
     // }
+    {
+      "packageName": "@devlab/vite-xstate",
+      "projectFolder": "vite-xstate"
+    }
   ]
 }

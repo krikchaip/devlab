@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "**/.rush": true,
+    "common/temp": true
+  }
+}
