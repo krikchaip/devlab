@@ -1,5 +1,4 @@
 import { useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
@@ -9,7 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img
-          src={logo}
+          src="/icon/logo.svg"
           className="App-logo"
           alt="logo"
         />
