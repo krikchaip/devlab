@@ -166,6 +166,14 @@
     //    */
     //   // "autoinstallerName": "my-task"
     // }
+    {
+      "commandKind": "global",
+      "name": "format",
+      "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
+      "safeForSimultaneousRushProcesses": true,
+      "shellCommand": "pretty-quick --staged --verbose",
+      "autoinstallerName": "rush-format"
+    }
   ],
 
   /**
