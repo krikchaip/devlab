@@ -52,8 +52,9 @@ jspm_packages/
 # dotenv environment variables file
 .env
 
-# next.js build output
+# Build outputs
 .next
+dist
 
 # OS X temporary files
 .DS_Store
