@@ -9,12 +9,14 @@ export const clockContext = {
 
 export type ClockEvent = { type: "TURN_ON" } | { type: "TURN_OFF" };
 
-export default /** @xstate-layout N4IgpgJg5mDOIC5QGMA2B7ZBrAdOgZvgMQAqAqgEoByA+gPJWKgAO6sAlgC7voB2TIAB6IAjADYArDgCcs2RJEAOACyrpYgMwAaEAE9EAJmXScx2YrEjpigOwGADCJsBfZzrSZcfHOwiowRIKwnACGnGA4IfjhAE4AFCL2SQCURB7YeLw+fmACrBzcfALCCGo4BuoWGspOdprKOvoIFQY44mKSGjb2ymLGru4YGd7c2ER5bFw8-EhCiMY2ODaKIgZiioqOErJijYaqbR19iganihISXQMg6V68pJS0dABizxMF08WikjJy0goqNSaPbNRymP6JDROAwrESuNwgXjoCBwAS3PCEd5TIqzErKAwghytRQaUkGERQsQGLrU67o7y+fxYwozUAlDQGKQVdYKGEw0m7PT7KRmawaDrKGySAwuBH0rKjLDMz64xBiMGJaTi7bSBw2Qn2MS-cz1DT-HqywaeTLKnFsxAaMHc86rE4k8UgikaY2yPkiEQSFRiOlDJWzfLY1lzBBKQnev4Jv4WeHOIA */
-createMachine<ClockContext, ClockEvent>(
+export default /** @xstate-layout N4IgpgJg5mDOIC5QGMA2B7ZBrAdOgZvgMQAqAqgEoByA+gPJWKgAO6sAlgC7voB2TIAB6IAjAGYxOMSIAMMgGwAOAJwB2aQCYALPIA0IAJ6JtWnCPkWtijTcUBWO1oC+T-Wky4+OdhFRgigrCcAIacYDjB+GEATgAUsnIAlETu2Hi83r5gAqwc3HwCwghaDjgyGoqqIlpaqvJ2qlb6RggaYqo48jLKWspdyspiiooiqi5uGGle3NhEOWxcPPxIQoi1yjgaqjL2IxYKYsrNoqobciKK8jV28soNyuMgqZ68pJS0dABin-N5S4WiDQbPryCQ6AZqHR2Y4IUZnGQXK4lW73FyuEC8dAQOACZ54Qi-RYFFZFAC0QJwVWUsnkpwOWi2MI0ozMVTsbQa5Su4keeK8Pj8hPyy1ARQkIjKFW2bS05msMmhhmMOzM3TsKi2ym6lV5kxeOBmWCF-xJiHkGjsmwczIalV6Whh1XknW6V0UNQ0CO6Gl1HnSxuJosQYhkHXKlXKYllSk9ipa6hdIJEAxuybEPvRzwDItWCFJdkkVJpdNBDNUMNJYmdhxkUfko2jahEaKcQA */
+createMachine(
   {
+    context: clockContext,
+    tsTypes: {} as import("./clock.typegen").Typegen0,
+    schema: { context: {} as ClockContext, events: {} as ClockEvent },
     id: "clock",
     description: "clock signals simulation",
-    context: clockContext,
     initial: "off",
     states: {
       off: {
