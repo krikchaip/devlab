@@ -53,9 +53,15 @@ createMachine(
   },
   {
     actions: {
-      rotateSecondHand: (ctx, evt) => console.log(ctx.secondHandDegree, evt),
-      rotateMinuteHand: (ctx, evt) => console.log(ctx.minuteHandDegree, evt),
-      rotateHourHand: (ctx, evt) => console.log(ctx.hourHandDegree, evt),
+      rotateSecondHand: assign({
+        secondHandDegree: ctx => (ctx.secondHandDegree + 6) % 360,
+      }),
+      rotateMinuteHand: assign({
+        minuteHandDegree: ctx => (ctx.minuteHandDegree + 1 / 10) % 360,
+      }),
+      rotateHourHand: assign({
+        hourHandDegree: ctx => (ctx.hourHandDegree + 1 / 120) % 360,
+      }),
     },
   }
 );
