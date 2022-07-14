@@ -4,12 +4,22 @@ import { clock } from "~/machines";
 
 export default function App() {
   const actor = useInterpret(clock);
+
   const secondHandDegree = useSelector(
     actor,
     ({ context }) => context.secondHandDegree
   );
+  const minuteHandDegree = useSelector(actor, ({ context }) =>
+    Math.floor(context.minuteHandDegree)
+  );
+  const hourHandDegree = useSelector(actor, ({ context }) =>
+    Math.floor(context.hourHandDegree)
+  );
 
   const { send } = actor;
+
+  // TODO: fix double render problem
+  console.log(minuteHandDegree);
 
   return (
     <div className="absolute-center space-y-5">
@@ -29,6 +39,18 @@ export default function App() {
             style={{ transform: `translateX(-50%) rotate(${i * 30}deg)` }}
           />
         ))}
+        <div
+          className="w-2.5 h-[calc(12.5rem-8px-theme(spacing.20))] absolute-center !top-20 origin-bottom bg-black rounded-sm -z-10"
+          style={{
+            transform: `translateX(-50%) rotate(${hourHandDegree}deg)`,
+          }}
+        />
+        <div
+          className="w-1.5 h-[calc(12.5rem-8px-theme(spacing.8))] absolute-center !top-8 origin-bottom bg-black rounded-sm -z-10"
+          style={{
+            transform: `translateX(-50%) rotate(${minuteHandDegree}deg)`,
+          }}
+        />
         <div
           className="w-1 h-[calc(12.5rem-8px)] absolute-center !top-0 origin-bottom bg-red-500 rounded-sm -z-10"
           style={{
