@@ -18,9 +18,6 @@ export default function App() {
 
   const { send } = actor;
 
-  // TODO: fix double render problem
-  console.log(minuteHandDegree);
-
   return (
     <div className="absolute-center space-y-5">
       <div
