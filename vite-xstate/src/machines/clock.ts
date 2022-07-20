@@ -7,9 +7,12 @@ export const clockContext = {
   hourHandDegree: 0,
 };
 
-export type ClockEvent = { type: "TURN_ON" } | { type: "TURN_OFF" };
+export type ClockEvent =
+  | { type: "TURN_ON" }
+  | { type: "TURN_OFF" }
+  | { type: "MANUAL_SYNC" };
 
-export default /** @xstate-layout N4IgpgJg5mDOIC5QGMA2B7ZBrAdOgZvgMQAqAqgEoByA+gPJWKgAO6sAlgC7voB2TIAB6IAjAGYxOMSIAMMgGwAOAJwB2aQCYALPIA0IAJ6JtWnCPkWtijTcUBWO1oC+T-Wky4+OdhFRgigrCcAIacYDjB+GEATgAUsnIAlETu2Hi83r5gAqwc3HwCwghaDjgyGoqqIlpaqvJ2qlb6RggaYqo48jLKWspdyspiiooiqi5uGGle3NhEOWxcPPxIQoi1yjgaqjL2IxYKYsrNoqobciKK8jV28soNyuMgqZ68pJS0dABin-N5S4WiDQbPryCQ6AZqHR2Y4IUZnGQXK4lW73FyuEC8dAQOACZ54Qi-RYFFZFAC0QJwVWUsnkpwOWi2MI0ozMVTsbQa5Su4keeK8Pj8hPyy1ARQkIjKFW2bS05msMmhhmMOzM3TsKi2ym6lV5kxeOBmWCF-xJiHkGjsmwczIalV6Whh1XknW6V0UNQ0CO6Gl1HnSxuJosQYhkHXKlXKYllSk9ipa6hdIJEAxuybEPvRzwDItWCFJdkkVJpdNBDNUMNJYmdhxkUfko2jahEaKcQA */
+export default /** @xstate-layout N4IgpgJg5mDOIC5QGMA2B7ZBrAdOgZvgMQAqAqgEoByA+gPJWKgAO6sAlgC7voB2TIAB6IAjAGYxOMSIAMMgGwAOAJwB2aQCYALPIA0IAJ6JtWnCPkWtijTcUBWO1oC+T-Wky4+OdhFRgigrCcAIacYDjB+GEATgAUsnIAlETu2Hi83r5gAqwc3HwCwghaDjgyYsoiiopKInaVyvpGCBpiqjhaysp25so6qjKKqhoubhhpXtzYRDlsXDz8SEKIWqrKOBqK4mKtqrKKMsp6hqKqijgqVfZiMloaZyWjIKmevKSUtHQAYl+zeQuFUQadZHeQSHRdNQ6OxNU7rORVeRaErybprJ4vIgAWQAglQyDiADI0ADKAE0qABhP7zApLIoAWmB52RijEyJkrTZbLEsIQshEODU4i04m65hqIyevHQEDgAheeEINPyi1AjOBOD2lQUawU7PufI0InaJrqrTsAw0SPEGPGr0yfhVAPpiAkgvKlVU8kcFi6Ii0Rpk7Uh8gF1tFynudo86RwUywzrp6sQ8g0dg2PqUkPTIhEfID8g6XT9m2U7qsMYmapAuVpNaKN3anpNPp0qMqgZOCHUxdBdhu6aGNiriaWddVgIQDIHWpEOvkerBd1UfIZQxwdjkOy2q29dRcLiAA */
 createMachine(
   {
     context: clockContext,
@@ -17,7 +20,7 @@ createMachine(
     schema: { context: {} as ClockContext, events: {} as ClockEvent },
     id: "clock",
     description: "clock signals simulation",
-    initial: "off",
+    initial: "on",
     states: {
       off: {
         on: {
@@ -50,6 +53,12 @@ createMachine(
         },
       },
     },
+    entry: "syncClock",
+    on: {
+      MANUAL_SYNC: {
+        actions: "syncClock",
+      },
+    },
   },
   {
     actions: {
@@ -61,6 +70,19 @@ createMachine(
       }),
       rotateHourHand: assign({
         hourHandDegree: ctx => (ctx.hourHandDegree + 1 / 120) % 360,
+      }),
+      syncClock: assign(() => {
+        const todayMidnight = (() => {
+          const today = new Date();
+          return today.setHours(0, 0, 0, 0);
+        })();
+        const secondsPassed = Math.floor((Date.now() - todayMidnight) / 1000);
+
+        return {
+          secondHandDegree: (secondsPassed % 60) * 6,
+          minuteHandDegree: (secondsPassed % 3600) * (1 / 10),
+          hourHandDegree: (secondsPassed % 86400) * (1 / 120),
+        };
       }),
     },
   }

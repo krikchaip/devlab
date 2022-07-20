@@ -3,6 +3,7 @@
 export interface Typegen0 {
   "@@xstate/typegen": true;
   eventsCausingActions: {
+    syncClock: "MANUAL_SYNC";
     rotateSecondHand: "xstate.after(1000)#clock.on.idle";
     rotateMinuteHand: "xstate.after(1000)#clock.on.idle";
     rotateHourHand: "xstate.after(1000)#clock.on.idle";

@@ -68,6 +68,12 @@ export default function App() {
         >
           TURN_ON
         </button>
+        <button
+          className="p-2 rounded border border-solid border-red-500 hover:bg-red-200 transition"
+          onClick={() => send("MANUAL_SYNC")}
+        >
+          SYNC
+        </button>
       </div>
     </div>
   );
